@@ -131,8 +131,8 @@ function handleEvents(fx) {
         if (e.obj.size > 0.8 || Math.random() < 0.3) stars(h.x, h.z, h.r, Math.min(8, 1 + Math.floor(e.obj.size * 1.5)));
         G.popAcc += e.pts;
         if (e.obj.size > 2.5) { R.shake = Math.min(1, R.shake + e.obj.size * 0.08); vibrate(e.obj.size > 5 ? 40 : 18); }
-        if (h.combo >= 5 && h.combo % 5 === 0) { H.showCombo(h.combo); A.sCombo(h.combo); }
-        else if (h.combo > 5) H.showCombo(h.combo);
+        if (h.combo >= 5 && h.combo % 5 === 0) { H.showCombo(h.combo >= 20 ? 'MEGA COMBO' : h.combo >= 10 ? 'SUPER COMBO' : 'COMBO'); A.sCombo(h.combo); }
+        else if (h.combo > 5) H.showCombo(h.combo >= 20 ? 'MEGA COMBO' : h.combo >= 10 ? 'SUPER COMBO' : 'COMBO');
       } else if (visibleNear(h.x, h.z) && e.obj.size > 1.5) A.sEat(e.obj.size * 0.6, 0);
     } else if (e.type === 'level') {
       if (h === G.player) { H.banner('SIZE UP!', '#ffe14a'); A.sLevel(); sparkleRing(h.x, h.z, h.targetR, h.color); vibrate(25); R.shake = Math.min(1, R.shake + 0.25); }
@@ -183,7 +183,7 @@ function endRound(fx, reason = 'timeout') {
   G.mode = 'over'; G.overT = 0; G.resultReason = reason;
   const sorted = rankMatchHoles(holes, G.rules, reason, G.lastBiteWinner); G.sorted = sorted;
   const rank = sorted.indexOf(G.player) + 1;
-  const coins = Math.floor(G.player.score / 6) + ([120, 70, 45, 30, 20, 14, 10, 8][rank - 1] || 8);
+  const coins = Math.floor(G.player.score / 12) + ([60, 35, 22, 14, 10, 8, 6, 5][rank - 1] || 5);
   G.coinsEarned = coins;
   if (Q.autoplay) { G.autoRestart = 3; if (fx) H.banner("TIME'S UP!", '#fff'); return; }
   if (!G.testScene) store.coins = store.coins + coins;
@@ -372,6 +372,7 @@ async function boot() {
   else showMenu();
   if (Q.warp > 0) { const st = 1 / 30; for (let t = 0; t < Q.warp; t += st) sim(st, false); }
   if (G.player) frameCamera(G.player.x, G.player.z, G.player.r, 0, true);
+  try { R.renderer.compile(R.scene, R.camera); } catch (e) {}
   last = performance.now();
   requestAnimationFrame(frame);
 }

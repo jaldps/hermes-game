@@ -296,7 +296,7 @@ function spawnCar(kind) {
 
 function spawnPed(b, mode) {
   const v = irange(0, 2);
-  const o = addObject({ type: 'person', kind: 'person', x: b.cx, z: b.cz, yaw: 0, base: CITY.CURB_H, size: T.person.size, h: T.person.h, value: 1,
+  const o = addObject({ type: 'person', kind: 'person', x: b.cx, z: b.cz, yaw: 0, base: CITY.CURB_H, size: T.person.size * 1.3, h: T.person.h * 1.3, value: 1,
     parts: [{ pool: P['person' + v], local: M(0, 0, 0, 1, 1, 1), color: col(pick(PAL.shirts)), attrs: { tint2: col(pick(PAL.pants)).toArray(), aAnim: [rand() * 6.28, 0, 0] } }],
     decal: { w: 0.9, d: 0.9 } });
   o.moving = true;

@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { CITY } from './config.js';
 import { groundMaterial, U } from './materials.js';
 
-export const R = { renderer: null, scene: null, camera: null, sun: null, hemi: null, water: null, ground: null, pr: 1, quality: 'high', camD: 40, camTarget: new THREE.Vector3(), shake: 0 };
+export const R = { renderer: null, scene: null, camera: null, sun: null, hemi: null, water: null, ground: null, pr: 1, quality: 'high', camD: 40, camTarget: new THREE.Vector3(), shake: 0, pitch: 50 };
 const FOG_COL = new THREE.Color('#bfe0ee');
 
 export function initRender(canvas, quality) {
@@ -114,7 +114,7 @@ function buildWater(scene) {
 // Camera framing for a hole of radius r at (x,z)
 export function frameCamera(x, z, r, dt, snap = false) {
   const cam = R.camera; const aspect = cam.aspect;
-  const want = 16.5 + r * (r < 5 ? 5.4 : 4.3) + (r >= 5 ? 5.5 : 0);                     // desired visible ground width (portrait)
+  const want = 13.0 + r * (r < 5 ? 4.6 : 3.6) + (r >= 5 ? 4.0 : 0);                     // desired visible ground width (portrait)
   const vf = THREE.MathUtils.degToRad(cam.fov);
   const hf = 2 * Math.atan(Math.tan(vf / 2) * Math.min(1, aspect));
   const D = want / (2 * Math.tan(hf / 2));

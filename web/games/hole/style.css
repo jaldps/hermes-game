@@ -97,7 +97,7 @@ button{font:inherit;border:0;cursor:pointer;color:#fff}
 .logo .l1{font-size:min(19vw,86px);color:#fff;paint-order:stroke fill;-webkit-text-stroke:12px var(--navy);letter-spacing:1px;transform:rotate(-4deg)}
 .logo .l2{font-size:min(26vw,120px);color:#ffc531;paint-order:stroke fill;-webkit-text-stroke:14px var(--navy);transform:rotate(-4deg);margin-top:2px;text-shadow:0 -6px 0 #ffe36b inset}
 .logo .l1,.logo .l2{text-shadow:0 7px 0 var(--navy),0 12px 18px rgba(0,0,0,.35)}
-.logo .tag{font-family:'Nunito';font-weight:900;font-size:15px;margin-top:18px;text-shadow:0 2px 4px rgba(0,0,0,.6);letter-spacing:.3px}
+.logo .tag{font-family:'Nunito';font-weight:900;font-size:15px;margin-top:18px;text-shadow:0 2px 4px rgba(0,0,0,.6);letter-spacing:.3px;filter:none}
 .menuBottom{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
 .best{font-family:'Lilita One';font-size:18px;background:rgba(22,32,58,.7);padding:4px 16px;border-radius:14px}
 .best b{color:#ffd84a;font-weight:400}

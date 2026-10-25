@@ -19,13 +19,13 @@ CITY.HALF = CITY.SPAN / 2 + CITY.BORDER;               // platform half extent
 export const HOLE = {
   R0: 0.95,
   LEVEL_GROWTH: 1.165,
-  MAX_LEVEL: 19,
+  MAX_LEVEL: 30,
   GROW: 0.21,            // fraction of swallowed footprint area added to the hole's area
   FIT: 0.94,             // object size must be < r*FIT to fall in
   SPEED_BASE: 7.2,
   SPEED_PER_R: 0.45,
   EAT_HOLE_RATIO: 1.22,
-  BOT_GROW: 0.78,        // bots grow a little slower than the player  // radius ratio required to eat another hole
+  BOT_GROW: 1.0,         // bots grow at player rate (no handicap)
 };
 export function levelRadius(L) { return HOLE.R0 * Math.pow(HOLE.LEVEL_GROWTH, L - 1); }
 export function levelMass(L) { const a = levelRadius(L), b = levelRadius(L + 1); return Math.PI * (b * b - a * a) / HOLE.GROW; }

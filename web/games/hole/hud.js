@@ -87,7 +87,7 @@ export function setScore(n) { if (n === lastScore) return; lastScore = n; const 
 export function setSize(level, prog) { $('lvlTxt').textContent = level; $('sizeArc').style.strokeDashoffset = (113.1 * (1 - prog)).toFixed(1); }
 
 let comboT = 0;
-export function showCombo(n) { const el = $('combo'); el.innerHTML = `COMBO <b>x${n}</b>`; el.classList.add('on'); el.style.opacity = '1'; comboT = 0.9; }
+export function showCombo(n) { const el = $('combo'); const txt = typeof n === 'string' ? n : `COMBO x${Math.min(20, n)}`; el.innerHTML = txt; el.classList.add('on'); el.style.opacity = '1'; comboT = 0.9; }
 export function tickCombo(dt) { if (comboT > 0) { comboT -= dt; if (comboT <= 0) { const el = $('combo'); el.classList.remove('on'); } } }
 export function banner(text, color = '#fff') {
   const el = $('banner'); el.textContent = text; el.style.color = color; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');

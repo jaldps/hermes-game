@@ -48,7 +48,13 @@ function decide(h, b) {
       if (d < 8 + h.r * 1.6 * b.skill && d < bestHD) { bestHD = d; bestHole = o; }
     }
   }
-  if (bestHole && rand() < 0.3 + b.skill * 0.4) { b.tx = bestHole.x + bestHole.vx * 0.4; b.tz = bestHole.z + bestHole.vz * 0.4; return; }
+  // 1b) hunt the player if we can eat them and are near
+  const player = holes.find(o => o.isPlayer && o.alive);
+  if (player && h.r > player.r * HOLE.EAT_HOLE_RATIO * 1.02) {
+    const d = Math.hypot(player.x - h.x, player.z - h.z);
+    if (d < 14 + h.r * 2.5 && d < bestHD) { bestHD = d; bestHole = player; }
+  }
+  if (bestHole && rand() < 0.5 + b.skill * 0.4) { b.tx = bestHole.x + bestHole.vx * 0.4; b.tz = bestHole.z + bestHole.vz * 0.4; return; }
   // 2) best food cluster within reach
   const R = 12 + h.r * 3.2;
   gridQuery(h.x, h.z, R, _q);

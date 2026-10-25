@@ -50,11 +50,11 @@ function wallMaterial(color) {
     fragmentShader: `uniform vec3 uCol; uniform float uR; uniform float uTime; varying vec3 vP; varying vec3 vW;
       void main(){
         float depth = -vW.y;
-        float k = exp(-depth / (0.35 + uR*0.32));
+        float k = exp(-depth / (0.28 + uR*0.22));
         float ang = atan(vP.z, vP.x);
-        float streak = 0.85 + 0.15*sin(ang*24.0 + depth*0.6);
-        vec3 c = mix(vec3(0.0), uCol*0.42 + vec3(0.02,0.02,0.04), k) * streak;
-        c += uCol * 0.35 * smoothstep(0.08, 0.0, depth);
+        float streak = 1.0;
+        vec3 c = mix(vec3(0.0), uCol*0.28 + vec3(0.01,0.01,0.03), k);
+        c += uCol * 0.18 * smoothstep(0.06, 0.0, depth);
         gl_FragColor = vec4(c, 1.0);
         #include <colorspace_fragment>
       }`,
@@ -119,7 +119,7 @@ export class Hole {
     this.ao.position.y = TOP + 0.002; this.ao.renderOrder = 2;
     this.group.add(this.wall, this.bottom, this.rim, this.ao);
     // glow halo on the ground (additive) and an x-ray outline visible through buildings
-    this.glow = new THREE.Mesh(glowGeo, new THREE.MeshBasicMaterial({ color: o.skin.a, transparent: true, opacity: 0.55, alphaMap: GLOW_TEX, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false }));
+    this.glow = new THREE.Mesh(glowGeo, new THREE.MeshBasicMaterial({ color: o.skin.a, transparent: true, opacity: 0.32, alphaMap: GLOW_TEX, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false }));
     this.glow.position.y = TOP + 0.004; this.glow.renderOrder = 3; this.group.add(this.glow);
     if (this.isPlayer) {
       this.xray = new THREE.Mesh(xrayGeo, new THREE.MeshBasicMaterial({ color: o.skin.b, transparent: true, opacity: 0.55, depthTest: false, depthWrite: false, toneMapped: false }));
@@ -174,7 +174,7 @@ function startFall(o, h, time) {
   if (o.kind === 'person') { const p = o.parts[0]; p.pool.setAttr('aAnim', p.id, rand() * 6, 1, 9); }
   falling.add(o);
   // scoring + growth
-  if (time - h.lastEat < 0.75) h.combo++; else h.combo = 1;
+  if (time - h.lastEat < 0.75) h.combo++; else h.combo = 1; h.combo = Math.min(20, h.combo);
   h.lastEat = time; h.bestCombo = Math.max(h.bestCombo, h.combo);
   const bonus = 1 + Math.min(h.combo, 30) * 0.04;
   const pts = Math.max(1, Math.round(o.value * bonus));
